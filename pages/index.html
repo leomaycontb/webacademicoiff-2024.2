@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecionando...</title>
+    <script src="../misc/state.js"></script>
+  </head>
+  <body>
+    <script>
+      const token = localStorage.getItem("token");
+      if(token) {
+        let state = GlobalState.getInstance();
+        state.userToken = token;
+        window.location.href = "homepage/index.html";
+      }
+      window.location.href = "login/index.html"
+    </script>
+  </body>
+</html>
