@@ -5,6 +5,7 @@ globalStyles.replaceSync(`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: Arial;
   }
 
   html, body {
@@ -15,5 +16,11 @@ globalStyles.replaceSync(`
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
+  }
+
+  .centralized {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `);
