@@ -85,7 +85,7 @@ class LoginInput extends HTMLElement {
     this.shadow.innerHTML = `
       <div id="input-wrapper">
         <input type="${this.type}" placeholder="${this.placeholder}"/>
-        <button id="clear-btn"><img src="../../assets/clear-icon.svg"/></button>
+        <button id="clear-btn"><img src="assets/clear-icon.svg"/></button>
       </div>
     `;
   }

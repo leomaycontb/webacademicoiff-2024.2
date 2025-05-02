@@ -14,17 +14,14 @@
         height: 100%;
       }
     </style>
-    <script src="../misc/state.js"></script>
   </head>
   <body>
     <script>
       const token = localStorage.getItem("token");
       if(token) {
-        let state = GlobalState.getInstance();
-        state.userToken = token;
-        window.location.href = "pages/homepage/index.html";
+        window.location.href = "homepage.html";
       }
-      window.location.href = "pages/login/index.html"
+      window.location.href = "login.html"
     </script>
   </body>
 </html>

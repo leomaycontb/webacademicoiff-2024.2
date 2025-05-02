@@ -95,7 +95,7 @@ class Login extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
       <main class="container centralized">
-        <img src="../../assets/logo.png" alt="Logo da instituição"/>
+        <img src="assets/logo.png" alt="Logo da instituição"/>
         <section class="centralized">
           <h1>Faça seu login</h1>
           <form class="centralized">
