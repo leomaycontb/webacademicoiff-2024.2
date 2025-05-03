@@ -64,7 +64,7 @@ class Login extends HTMLElement {
     this.shadow = this.attachShadow({mode: 'open'});
     this.shadow.adoptedStyleSheets = [globalStyles, loginLocalStyles];
     this.registroApi = RegistroApi.instance;
-    if(this.registroApi.token) {
+    if(this.registroApi.loggedUser) {
       window.location.href = "homepage.html";
     }
   }

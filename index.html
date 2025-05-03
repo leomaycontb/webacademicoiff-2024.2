@@ -9,7 +9,7 @@
   <body>
     <script>
       const registroApi = RegistroApi.instance;
-      if(registroApi.token) {
+      if(registroApi.loggedUser) {
         window.location.href = "homepage.html";
       }
       window.location.href = "login.html"
