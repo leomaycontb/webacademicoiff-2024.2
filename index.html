@@ -3,22 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <title>Redirecionando...</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      html, body {
-        height: 100%;
-      }
-    </style>
+    <link rel="stylesheet" href="misc/realDomResets.css"/>
+    <script src="services/registroApi.js"></script>
   </head>
   <body>
     <script>
-      const token = localStorage.getItem("token");
-      if(token) {
+      const registroApi = RegistroApi.instance;
+      if(registroApi.token) {
         window.location.href = "homepage.html";
       }
       window.location.href = "login.html"

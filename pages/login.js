@@ -63,6 +63,10 @@ class Login extends HTMLElement {
     super();
     this.shadow = this.attachShadow({mode: 'open'});
     this.shadow.adoptedStyleSheets = [globalStyles, loginLocalStyles];
+    this.registroApi = RegistroApi.instance;
+    if(this.registroApi.token) {
+      window.location.href = "homepage.html";
+    }
   }
 
   connectedCallback() {
@@ -76,6 +80,16 @@ class Login extends HTMLElement {
 
     const form = this.shadow.querySelector("form");
     form.addEventListener("submit", this.onSubmitForm.bind(this));
+
+    const closeDialogButton = this.shadow.querySelector("#closeDialogButton");
+    if(closeDialogButton) {
+      closeDialogButton.onClick = this.onCloseErrorDialog.bind(this);
+    }
+  }
+
+  onCloseErrorDialog(_response) {
+    this.errorMessage = null;
+    this.connectedCallback();
   }
 
   onChangeName(value) {
@@ -86,14 +100,22 @@ class Login extends HTMLElement {
     this.password = value;
   }
 
-
   onSubmitForm(event) {
     event.preventDefault();
-    console.log({name: this.nameInput, password: this.password})
+    const response = this.registroApi.login(this.nameInput, this.password);
+    if(response.success) {
+      window.location.href = "homepage.html";
+      return;
+    }
+    this.errorMessage = response.message;
+    this.connectedCallback();
   }
 
   render() {
     this.shadow.innerHTML = `
+      ${this.errorMessage ? `<modal-dialog id="loginErrorDialog" type="error" title="Erro ao realizar login" subtitle="${this.errorMessage}">
+          <button-component color="white" backgroundColor="#DC143C" id="closeDialogButton">Fechar</button-component>
+        </modal-dialog>` : ''}
       <main class="container centralized">
         <img src="assets/logo.png" alt="Logo da instituição"/>
         <section class="centralized">
