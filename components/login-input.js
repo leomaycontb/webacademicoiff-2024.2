@@ -76,11 +76,6 @@ class LoginInput extends HTMLElement {
     this.setAttribute('type', val);
   }
 
-  attributeChangedCallback(name, _, newVal) {
-    this[name] = newVal;
-    this.render();
-  }
-
   render() {
     this.shadow.innerHTML = `
       <div id="input-wrapper">
