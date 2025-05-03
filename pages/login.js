@@ -15,7 +15,7 @@ loginLocalStyles.replaceSync(`
     background-color: #493159;
     flex-direction: column;
     border-radius: 50px;
-    padding: 120px 60px;
+    padding: 12% 2%;
   }
 
   form {
@@ -25,20 +25,20 @@ loginLocalStyles.replaceSync(`
 
   h1 {
     color: white; 
-    font-size: 35px;
-    margin-bottom: 50px;
+    font-size: 200%;
+    margin-bottom: 10%;
   }
 
   a {
     color: white; 
-    font-size: 15px;
+    font-size: 95%;
   }
 
   #inputs-wrapper {
     width: 80%;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 50px;
+    gap: 14px;
+    margin-bottom: 10%;
   }
 
   login-input {
@@ -49,12 +49,12 @@ loginLocalStyles.replaceSync(`
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 12px 60px;
+    padding: 3% 12%;
     background-color: #65558F;
     color: white;
-    font-size: 17px;
+    font-size: 105%;
     border-radius: 25px;
-    margin-bottom: 10px;
+    margin-bottom: 2%;
   }
 `);
 

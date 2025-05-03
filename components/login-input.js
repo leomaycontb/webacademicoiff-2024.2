@@ -3,7 +3,7 @@ const loginInputlocalStyles = new CSSStyleSheet();
 loginInputlocalStyles.replaceSync(`
   input {
     border: none;
-    padding: 15px;
+    padding: 4%;
     width: 100%;
     display: block;
     outline: none;
@@ -11,7 +11,7 @@ loginInputlocalStyles.replaceSync(`
   }
 
   input::placeholder {
-    font-size: 15px;
+    font-size: 110%;
     color: black;
   }
 
@@ -23,7 +23,7 @@ loginInputlocalStyles.replaceSync(`
   #clear-btn {
     position: absolute;
     outline: none;
-    right: 0.5em;
+    right: 1em;
     top: 50%;
     transform: translateY(-50%);
     background: none;
