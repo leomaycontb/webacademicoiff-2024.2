@@ -4,7 +4,7 @@ const mockedUsers = [
   {
     name: "Administrativo",
     password: "admin123",
-    avatarUrl: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+    avatarUrl: "https://i.pravatar.cc/150?u=fake20@pravatar.com"
   }
 ]
 
@@ -38,7 +38,7 @@ class RegistroApi {
       return JSON.parse(atob(savedUsers));
     }
     localStorage.setItem("users", btoa(JSON.stringify(mockedUsers)));
-    return {...mockedUsers};
+    return [...mockedUsers.map(mu => ({...mu}))];
   }
 
   static get instance() {
@@ -46,6 +46,12 @@ class RegistroApi {
       this._instance = new RegistroApi();
     }
     return this._instance;
+  }
+
+  logout() {
+    localStorage.removeItem("token");
+    this.loggedUser = null;
+    this.#token = null;
   }
 
   login(name, password) {

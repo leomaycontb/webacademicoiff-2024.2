@@ -5,14 +5,12 @@
     <title>Registro acadêmico - Home</title>
     <link rel="stylesheet" href="misc/realDomResets.css"/>
     <script src="services/registroApi.js"></script>
+    <script src="misc/global-styles.js"></script>
+    <script src="components/header-component.js"></script>
+    <script src="pages/homepage.js"></script>
   </head>
   <body>
-    <script>
-      const registroApi = RegistroApi.instance;
-      if(!registroApi.token) {
-        window.location.href = "login.html";
-      }
-    </script>
-    <p>Home Page</p>
+    <header-component></header-component>
+    <home-page></home-page>
   </body>
 </html>
