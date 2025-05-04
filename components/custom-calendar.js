@@ -74,8 +74,8 @@ customCalendarLocalStyles.replaceSync(`
 
   .day span {
     position: absolute;
-    top: 5%;
-    left: 5%;
+    top: 10%;
+    left: 10%;
     font-weight: bold;
   }
 
@@ -114,8 +114,8 @@ customCalendarLocalStyles.replaceSync(`
 
   #events {
     background: #f9fafb;
-    padding: 12px;
-    margin-top: 12px;
+    padding: 5% 5% 8%;
+    margin-top: 5%;
     border-radius: 12px;
   }
 

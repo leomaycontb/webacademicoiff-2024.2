@@ -10,7 +10,7 @@ globalStyles.replaceSync(`
 
   .container {
     width: 90%;
-    max-width: 1400px;
+    max-width: 1300px;
     margin: 0 auto;
   }
 
