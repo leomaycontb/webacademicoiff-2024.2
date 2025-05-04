@@ -41,6 +41,33 @@ const mockedEvents = [
   }
 ]
 
+const mockedTasks = [
+  {
+    title: "Matrícula de disciplinas",
+    status: "pending"
+  },
+  {
+    title: "Matrícula de disciplinas",
+    status: "pending"
+  },
+  {
+    title: "Matrícula de disciplinas",
+    status: "done"
+  },
+  {
+    title: "Matrícula de disciplinas",
+    status: "done"
+  },
+  {
+    title: "Matrícula de disciplinas",
+    status: "done"
+  },
+  {
+    title: "Matrícula de disciplinas",
+    status: "done"
+  }
+]
+
 class RegistroApi {
   static _instance;
 
@@ -109,5 +136,12 @@ class RegistroApi {
       return {success: false, message: 'Você precisa estar autenticado'};
     }
     return {success: true, data: mockedEvents};
+  }
+
+  get tasks() {
+    if(!this.loggedUser) {
+      return {success: false, message: 'Você precisa estar autenticado'};
+    }
+    return {success: true, data: mockedTasks};
   }
 }
