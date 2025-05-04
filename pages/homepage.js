@@ -1,7 +1,19 @@
 const homepageLocalStyles = new CSSStyleSheet();
 
 homepageLocalStyles.replaceSync(`
-  
+  #calendar-and-tasks {
+    margin-top: 3%;
+    justify-content: space-between !important;
+    gap: 100px;
+  }
+
+  custom-calendar {
+    width: 50%;
+  }
+
+  #tasks {
+    width: 50%;
+  }
 `);
 
 class Homepage extends HTMLElement {
@@ -21,7 +33,10 @@ class Homepage extends HTMLElement {
 
   render() {
     this.shadow.innerHTML = `
-      <h1>Homepage</h1>
+      <section id="calendar-and-tasks" class="container centralized">
+        <custom-calendar></custom-calendar>
+        <section id="tasks"><h1>Tarefas</h1></section>
+      </section>
     `
   }
 }

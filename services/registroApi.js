@@ -8,13 +8,45 @@ const mockedUsers = [
   }
 ]
 
+const mockedEvents = [
+  {
+    title: "Feriado - dia do trabalhador",
+    dateRange: {init: new Date("2025-05-01T00:00:00-03:00"), end: new Date("2025-05-02T00:00:00-03:00")},
+    workday: false
+  },
+  {
+    title: "P2 - Gerência de projetos",
+    dateRange: {init: new Date("2025-05-07T00:00:00-03:00"), end: new Date("2025-05-07T00:00:00-03:00")},
+    workday: true
+  },
+  {
+    title: "Sábado letivo - Informática",
+    dateRange: {init: new Date("2025-05-10T00:00:00-03:00"), end: new Date("2025-05-10T00:00:00-03:00")},
+    workday: true
+  },
+  {
+    title: "Verificação suplementar - integrado",
+    dateRange: {init: new Date("2025-05-19T00:00:00-03:00"), end: new Date("2025-05-23T00:00:00-03:00")} ,
+    workday: true
+  },
+  {
+    title: "Conselho de classe - integrado",
+    dateRange: {init: new Date("2025-05-26T00:00:00-03:00"), end: new Date("2025-05-30T00:00:00-03:00")} ,
+    workday: true
+  },
+  {
+    title: "Férias - segundo período",
+    dateRange: {init: new Date("2025-06-02T00:00:00-03:00"), end: new Date("2025-06-06T00:00:00-03:00")} ,
+    workday: false
+  }
+]
+
 class RegistroApi {
   static _instance;
 
   #users;
   #token;
   loggedUser;
-
 
   constructor() {
     this.#users = this.#loadUsers();
@@ -70,5 +102,12 @@ class RegistroApi {
     localStorage.setItem("token", token);
 
     return {success: true, message: 'Autenticado'};
+  }
+
+  get events() {
+    if(!this.loggedUser) {
+      return {success: false, message: 'Você precisa estar autenticado'};
+    }
+    return {success: true, data: mockedEvents};
   }
 }

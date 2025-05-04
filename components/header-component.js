@@ -4,6 +4,7 @@ headerComponentLocalStyles.replaceSync(`
   header {
     padding: 1.5% 3%;
     justify-content: space-between !important;
+    border-bottom: 1px solid #D9D9D9;
   }
 
   ul {
