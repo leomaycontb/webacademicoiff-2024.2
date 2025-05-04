@@ -13,7 +13,7 @@ dashboardComponentLocalStyles.replaceSync(`
 
   #chart-card {
     margin-top: 4%;
-    padding: 2% 3%;
+    padding: 2% 3% 5% 3%;
     border-radius: 20px;
     box-shadow: 0 5px 5px rgba(0,0,0,.1);
   }
@@ -72,6 +72,75 @@ dashboardComponentLocalStyles.replaceSync(`
     background: #F8F8FF url('assets/select-arrow.svg') 85% 50% no-repeat;
   }
 
+  #chart {
+    height: 450px;
+    margin-top: 2%;
+    position: relative;
+  }
+
+  #horizontal-lines {
+    position: absolute;
+    width: 100%;
+    height: 450px;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .horizontal-line-wrapper {
+    display: flex;
+  }
+
+  .horizontal-line-span-wrapper {
+    width: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: #615E83;
+    font-weight: 100;
+  }
+
+  .horizontal-line {
+    width: 95%;
+    border-top: 2px dotted #E5E5EF;
+    border-left: 1px solid #9291A5;
+  }
+
+  .horizontal-line-wrapper:last-child .horizontal-line {  
+    border-bottom: 1px solid #9291A5;
+  }
+
+  #bars {
+    position: absolute;
+    width: 100%;
+    height: 450px;
+    top: 0;
+    left: 0;
+  }
+
+  .bar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bar .bar-segment:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .bar-wrapper {
+    position: absolute;
+    bottom: -30px;
+  }
+
+  .bar-span-wrapper span {
+    color: #615E83;
+    height: 30px;
+    align-items: flex-end;
+  }
+
   #diary {
     width: 40%;
     margin-top: 10%;
@@ -106,37 +175,6 @@ dashboardComponentLocalStyles.replaceSync(`
     background-color: #493159;
     border-radius: 20px;
   }
-
-  #chart {
-    height: 450px;
-    margin-top: 2%;
-  }
-
-  .horizontal-line-wrapper {
-    display: flex;
-  }
-
-  .horizontal-line-span-wrapper {
-    width: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1%;
-    color: #615E83;
-    font-weight: 100;
-  }
-
-  .horizontal-line {
-    height: 90px;
-    width: 90%;
-    border-top: 2px dotted #E5E5EF;
-    border-left: 1px solid #9291A5;
-  }
-
-  .horizontal-line-wrapper:last-child .horizontal-line {  
-    border-bottom: 1px solid #9291A5;
-  }
 `);
 
 class DashboardComponent extends HTMLElement {
@@ -145,24 +183,11 @@ class DashboardComponent extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.adoptedStyleSheets = [globalStyles, dashboardComponentLocalStyles];
     this.registroApi = RegistroApi.instance;
-    this.captions = [
-      {
-        title: "Ativos",
-        color: "#493159"
-      },
-      {
-        title: "Engressando",
-        color: "#8B62CD"
-      },
-      {
-        title: "Formando",
-        color: "#E0C6FD"
-      },
-      {
-        title: "Trancados",
-        color: "#F0E5FC"
-      },
-    ]
+    const {success, data} = this.registroApi.chartData;
+    if(!success) {
+      window.location.href = "login.html";
+    }
+    this.chartData = data;
   }
 
   connectedCallback() {
@@ -191,7 +216,7 @@ class DashboardComponent extends HTMLElement {
 
             <div class="centralized caption-wrapper">
               <ul>
-                ${this.captions.map(caption => `
+                ${this.chartData.segmentCaptions.map(caption => `
                   <li>
                     <div class="caption-color" style="background-color: ${caption.color}"></div>
                     ${caption.title}
@@ -206,36 +231,32 @@ class DashboardComponent extends HTMLElement {
           </header>
 
           <section id="chart">
-            <div class="horizontal-line-wrapper">
-              <div class="horizontal-line-span-wrapper">
-                <span>1M</span>
-              </div>
-              <div class="horizontal-line"></div>
+            <div id="horizontal-lines">
+              ${this.chartData.YaxisBreakpoints.reverse().map((YAxisBreakpoint, idx, arr) => `
+                <div class="horizontal-line-wrapper" style="height: ${YAxisBreakpoint.percent}%">
+                  <div class="horizontal-line-span-wrapper">
+                    <span>${YAxisBreakpoint.caption}</span>
+                    ${idx == arr.length - 1 ? '<span>0</span>' : ''}
+                  </div>
+                  <div class="horizontal-line"></div>
+                </div>
+              `).join('')}
             </div>
-            <div class="horizontal-line-wrapper">
-              <div class="horizontal-line-span-wrapper">
-                <span>500k</span>
+
+            <div id="bars">
+              ${this.chartData.bars.map((bar, idx, arr) => `
+                <div class="bar-wrapper" style="width: calc(40% / ${arr.length}); left: calc(8% + (40% / ${arr.length}) * ${idx} + (51% / ${arr.length - 1}) * ${idx})">
+                  <div class="bar" style="height: calc(450px * ${bar.percent / 100});">
+                    ${bar.segments.map(segment => `
+                      <div class="bar-segment" style="background-color: ${segment.color}; height: ${segment.percent}%;"></div>
+                    `).join('')}
+                  </div>
+                  <div class="bar-span-wrapper">
+                    <span class="centralized">${bar.caption}</span>
+                  </div>
+                </div>
+              `).join('')}  
               </div>
-              <div class="horizontal-line"></div>
-            </div>
-            <div class="horizontal-line-wrapper">
-              <div class="horizontal-line-span-wrapper">
-                <span>200k</span>
-              </div>
-              <div class="horizontal-line"></div>
-            </div>
-            <div class="horizontal-line-wrapper">
-              <div class="horizontal-line-span-wrapper">
-                <span>100k</span>
-              </div>
-              <div class="horizontal-line"></div>
-            </div>
-            <div class="horizontal-line-wrapper">
-              <div class="horizontal-line-span-wrapper">
-                <span>50k</span>
-                <span>0</span>
-              </div>
-              <div class="horizontal-line"></div>
             </div>
           </section>
         </section>

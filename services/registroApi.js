@@ -91,6 +91,183 @@ const mockedTeachers = [
   },
 ]
 
+const mockedChartData = {
+  YaxisBreakpoints: [
+    {
+      percent: 5,
+      caption: '500'
+    },
+    {
+      percent: 10,
+      caption: '1k'
+    },
+    {
+      percent: 20,
+      caption: '2k'
+    },
+    {
+      percent: 50,
+      caption: '5k'
+    },
+    {
+      percent: 100,
+      caption: '10k'
+    }
+  ],
+  segmentCaptions: [
+    {
+      title: "Ativos",
+      color: "#493159"
+    },
+    {
+      title: "Engressando",
+      color: "#8B62CD"
+    },
+    {
+      title: "Formando",
+      color: "#E0C6FD"
+    },
+    {
+      title: "Trancados",
+      color: "#F0E5FC"
+    }
+  ],
+  bars: [
+    {
+      percent: 27,
+      segments: [
+        {
+          percent: 10,
+          color: '#F0E5FC'
+        },
+        {
+          percent: 15,
+          color: '#E0C6FD'
+        },
+        {
+          percent: 25,
+          color: '#8B62CD'
+        },
+        {
+          percent: 50,
+          color: '#493159'
+        },
+      ],
+      caption: '2022.1'
+    },
+    {
+      percent: 62,
+      segments: [
+        {
+          percent: 10,
+          color: '#F0E5FC'
+        },
+        {
+          percent: 30,
+          color: '#E0C6FD'
+        },
+        {
+          percent: 20,
+          color: '#8B62CD'
+        },
+        {
+          percent: 40,
+          color: '#493159'
+        },
+      ],
+      caption: '2022.2'
+    },
+    {
+      percent: 69,
+      segments: [
+        {
+          percent: 10,
+          color: '#F0E5FC'
+        },
+        {
+          percent: 30,
+          color: '#E0C6FD'
+        },
+        {
+          percent: 20,
+          color: '#8B62CD'
+        },
+        {
+          percent: 40,
+          color: '#493159'
+        },
+      ],
+      caption: '2023.1'
+    },
+    {
+      percent: 95,
+      segments: [
+        {
+          percent: 10,
+          color: '#F0E5FC'
+        },
+        {
+          percent: 30,
+          color: '#E0C6FD'
+        },
+        {
+          percent: 20,
+          color: '#8B62CD'
+        },
+        {
+          percent: 40,
+          color: '#493159'
+        },
+      ],
+      caption: '2023.2'
+    },
+    {
+      percent: 100,
+      segments: [
+        {
+          percent: 10,
+          color: '#F0E5FC'
+        },
+        {
+          percent: 30,
+          color: '#E0C6FD'
+        },
+        {
+          percent: 20,
+          color: '#8B62CD'
+        },
+        {
+          percent: 40,
+          color: '#493159'
+        },
+      ],
+      caption: '2024.1'
+    },
+    {
+      percent: 71,
+      segments: [
+        {
+          percent: 10,
+          color: '#F0E5FC'
+        },
+        {
+          percent: 30,
+          color: '#E0C6FD'
+        },
+        {
+          percent: 20,
+          color: '#8B62CD'
+        },
+        {
+          percent: 40,
+          color: '#493159'
+        },
+      ],
+      caption: '2024.2'
+    }
+  ]
+}
+
 class RegistroApi {
   static _instance;
 
@@ -173,5 +350,12 @@ class RegistroApi {
       return {success: false, message: 'Você precisa estar autenticado'};
     }
     return {success: true, data: mockedTeachers};
+  }
+
+  get chartData() {
+    if(!this.loggedUser) {
+      return {success: false, message: 'Você precisa estar autenticado'};
+    }
+    return {success: true, data: mockedChartData};
   }
 }
