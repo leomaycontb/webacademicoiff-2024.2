@@ -68,6 +68,29 @@ const mockedTasks = [
   }
 ]
 
+const mockedTeachers = [
+  {
+    name: "Professor 1",
+    hasSentDiary: true
+  },
+  {
+    name: "Professor 2",
+    hasSentDiary: false
+  },
+  {
+    name: "Professor 3",
+    hasSentDiary: false
+  },
+  {
+    name: "Professor 4",
+    hasSentDiary: false
+  },
+  {
+    name: "Professor 5",
+    hasSentDiary: false
+  },
+]
+
 class RegistroApi {
   static _instance;
 
@@ -143,5 +166,12 @@ class RegistroApi {
       return {success: false, message: 'Você precisa estar autenticado'};
     }
     return {success: true, data: mockedTasks};
+  }
+
+  get teachers() {
+    if(!this.loggedUser) {
+      return {success: false, message: 'Você precisa estar autenticado'};
+    }
+    return {success: true, data: mockedTeachers};
   }
 }
