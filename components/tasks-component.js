@@ -30,7 +30,6 @@ tasksComponentLocalStyles.replaceSync(`
 
   th, td {
     padding: 2%;
-    font-size: 100%;
   }
 
   td {
@@ -89,8 +88,33 @@ tasksComponentLocalStyles.replaceSync(`
     visibility: visible;
   }
 
+  @media (min-width: 900px) {
+    span {
+      font-size: 60% !important;
+    }
+  }
+
+  @media (min-width: 600px) {
+    span {
+      font-size: 70% !important;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    span {
+      font-size: 80% !important;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    span {
+      font-size: 100% !important;
+    }
+  }
+
   span {
     font-weight: bold;
+    font-size: 50%
   }
   
   .title {
