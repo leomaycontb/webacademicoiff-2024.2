@@ -10,7 +10,7 @@ headerComponentLocalStyles.replaceSync(`
   ul {
     list-style: none;
     display: flex;
-    gap: 25px;
+    gap: 2px;
   }
 
   li a {
@@ -19,6 +19,13 @@ headerComponentLocalStyles.replaceSync(`
     color: #493159;
     text-decoration: none;
     gap: 5px;
+    padding: 0 15px;
+    border-radius: 10px;
+  }
+
+  li a.active {
+    background-color: #493159;
+    color: white;
   }
 
   button {
@@ -39,6 +46,7 @@ headerComponentLocalStyles.replaceSync(`
 
   #logo {
     width: 70px;
+    cursor: pointer;
   }
 `);
 
@@ -57,6 +65,14 @@ class HeaderComponent extends HTMLElement {
     ];
   }
 
+  get activeUrl() {
+    return this.getAttribute('activeUrl');
+  }
+
+  set activeUrl(val) {
+    this.setAttribute('activeUrl', val);
+  }
+
   connectedCallback() {
     this.render();
 
@@ -72,13 +88,13 @@ class HeaderComponent extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
       <header class="centralized">
-        <img id="logo" src="assets/logo.jpeg" alt="logo acad"/>
-        <nav class="centralized">
+        <img onclick="window.location.href='homepage.html';" id="logo" src="assets/logo.jpeg" alt="logo acad"/>
+        <nav>
           <ul>
             ${this.navLinks.map(link => `
                 <li>
-                  <a href="${link.url}" class="centralized">
-                    <img src="assets/header-arrow.svg"/>
+                  <a href="${link.url}" class="centralized ${this.activeUrl == link.url ? 'active' : ''}">
+                    <img src="assets/${this.activeUrl == link.url ? 'header-arrow-white.svg' : 'header-arrow.svg'}"/>
                     ${link.title}
                   </a>
                 </li>
