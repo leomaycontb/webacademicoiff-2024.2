@@ -117,7 +117,7 @@ class Login extends HTMLElement {
           <button-component color="white" backgroundColor="#DC143C" id="closeDialogButton">Fechar</button-component>
         </modal-dialog>` : ''}
       <main class="container centralized">
-        <img src="assets/logo.png" alt="Logo da instituição"/>
+        <img src="assets/logo.jpeg" alt="Logo da instituição"/>
         <section class="centralized">
           <h1>Faça seu login</h1>
           <form class="centralized">

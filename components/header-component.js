@@ -2,7 +2,7 @@ const headerComponentLocalStyles = new CSSStyleSheet();
 
 headerComponentLocalStyles.replaceSync(`
   header {
-    padding: 1.5% 3%;
+    padding: 0.5% 3%;
     justify-content: space-between !important;
     border-bottom: 1px solid #D9D9D9;
   }
@@ -36,6 +36,10 @@ headerComponentLocalStyles.replaceSync(`
     object-fit: cover;
     border-radius: 50%;
   }
+
+  #logo {
+    width: 70px;
+  }
 `);
 
 class HeaderComponent extends HTMLElement {
@@ -68,7 +72,7 @@ class HeaderComponent extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
       <header class="centralized">
-        <img src="assets/header-logo.svg" alt="logo acad"/>
+        <img id="logo" src="assets/logo.jpeg" alt="logo acad"/>
         <nav class="centralized">
           <ul>
             ${this.navLinks.map(link => `
