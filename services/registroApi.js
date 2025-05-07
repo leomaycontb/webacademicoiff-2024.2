@@ -274,49 +274,84 @@ const mockedRequirements = [
     "Nome do Aluno": "Maria Cecilia Vasconcelos de Azeredo",
     "Curso": "B. Design Gráfico",
     "Tipo de Requerimento": "Histórico Escolar",
-    "selfUrl": "requerimento.html?id=0"
+    "selfUrl": "requerimento.html?id=0",
+    "Telefone": "+55 (22) 99883-7467",
+    "Email": "maria@email.com",
+    "Data da Solicitação": "2025-05-02",
+    "Número da Pasta": "01234",
+    "Justificativa": "..."
   },
   {
     "Matrícula": "202160396032",
     "Nome do Aluno": "Beatriz Padrao Areas",
     "Curso": "L. Teatro",
     "Tipo de Requerimento": "Histórico Escolar",
-    "selfUrl": "requerimento.html?id=1"
+    "selfUrl": "requerimento.html?id=1",
+    "Telefone": "+55 (32) 99783-7461",
+    "Email": "beatriz@email.com",
+    "Data da Solicitação": "2025-05-03",
+    "Número da Pasta": "11235",
+    "Justificativa": "..."
   },
   {
     "Matrícula": "202210660168",
     "Nome do Aluno": "Maria Alice Alves Gomes Fonseca",
     "Curso": "L. Ciências da Natureza",
     "Tipo de Requerimento": "Histórico Escolar",
-    "selfUrl": "requerimento.html?id=2"
+    "selfUrl": "requerimento.html?id=2",
+    "Telefone": "+55 (21) 99882-7467",
+    "Email": "mariaalice@email.com",
+    "Data da Solicitação": "2025-03-02",
+    "Número da Pasta": "01235",
+    "Justificativa": "..."
   },
   {
     "Matrícula": "202411660168",
     "Nome do Aluno": "Rafael Oliveira MArtins",
     "Curso": "T. I. Edificações",
     "Tipo de Requerimento": "Atestado de Matrícula",
-    "selfUrl": "requerimento.html?id=3"
+    "selfUrl": "requerimento.html?id=3",
+    "Telefone": "+55 (32) 98883-7461",
+    "Email": "rafael@email.com",
+    "Data da Solicitação": "2025-05-02",
+    "Número da Pasta": "01239",
+    "Justificativa": "..."
   },
   {
     "Matrícula": "202011661168",
     "Nome do Aluno": "João Pedro Pereira Lima",
     "Curso": "T. S. Química",
     "Tipo de Requerimento": "Atestado de Matrícula",
-    "selfUrl": "requerimento.html?id=4"
+    "selfUrl": "requerimento.html?id=4",
+    "Telefone": "+55 (21) 99783-7467",
+    "Email": "joao@email.com",
+    "Data da Solicitação": "2025-05-02",
+    "Número da Pasta": "01210",
+    "Justificativa": "..."
   },
   {
     "Matrícula": "201920660168",
     "Nome do Aluno": "Amanda Rocha Fernandes",
     "Curso": "T. C. Estradas",
     "Tipo de Requerimento": "Histórico Escolar",
-    "selfUrl": "requerimento.html?id=5"
+    "selfUrl": "requerimento.html?id=5",
+    "Telefone": "+55 (22) 99881-7167",
+    "Email": "amanda@email.com",
+    "Data da Solicitação": "2025-05-01",
+    "Número da Pasta": "012301",
+    "Justificativa": "..."
   },
   {
     "Matrícula": "202012760168",
     "Nome do Aluno": "Myllena Alves da Silva",
     "Curso": "B. Engenharia de Comput.",
     "Tipo de Requerimento": "Atestado de Matrícula",
-    "selfUrl": "requerimento.html?id=6"
+    "selfUrl": "requerimento.html?id=6",
+    "Telefone": "+55 (21) 99887-8578",
+    "Email": "myllena@email.com",
+    "Data da Solicitação": "2025-05-02",
+    "Número da Pasta": "012311",
+    "Justificativa": "..."
   }
 ];
 
@@ -422,12 +457,25 @@ class RegistroApi {
     return {success: true, data: mockedChartData};
   }
 
+  getRequirementsData(idx) {
+    if(idx >= 0 && idx < this.#requirements.length) {
+      return this.#requirements[idx];
+    }
+    return null;
+  }
+
   get requirementsDataForTable() {
     if(!this.loggedUser) {
       return {success: false, message: 'Você precisa estar autenticado'};
     }
     return {success: true, data: {
-      rows: this.#requirements.map(mr => ({...mr})),
+      rows: this.#requirements.map(mr => ({
+        "Matrícula": mr["Matrícula"], 
+        "Nome do Aluno": mr["Nome do Aluno"],
+        "Curso": mr["Curso"],
+        "Tipo de Requerimento": mr["Tipo de Requerimento"],
+        "selfUrl": mr["selfUrl"]
+      })),
       firstSelectValuesAndFiltersFn: [{value: "Todos os Cursos", fn: (row, value) => true}, ...this.#requirements.reduce(([data, loaded], re) => {
         if(loaded.includes(re["Curso"])) return [data, loaded];
         return [[...data, {
@@ -443,5 +491,13 @@ class RegistroApi {
         }], [...loaded, re["Tipo de Requerimento"]]];
       }, [[], []])[0]], 
     }};
+  }
+
+  updateRequirement(id, data) {
+    this.#requirements[id] = {...this.#requirements[id], ...data};
+
+    localStorage.setItem("requirements", btoa(JSON.stringify(this.#requirements)));
+
+    return {success: true, message: "Atualizado com sucesso!"};
   }
 }

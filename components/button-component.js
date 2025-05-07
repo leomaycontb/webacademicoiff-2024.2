@@ -4,7 +4,7 @@ buttonComponentLocalStyles.replaceSync(`
   button {
     outline: none;
     background: none;
-    padding: 2% 5%;
+    padding: 10px 20px;
     border: none;
     border-radius: 10px;
     font-size: 100%;
@@ -72,7 +72,7 @@ class ButtonComponent extends HTMLElement {
       ` : ''}
 
       ${this.backgroundColor ? `
-        background: ${this.backgroundColor};
+        background-color: ${this.backgroundColor};
       ` : ''}
     `;
   }

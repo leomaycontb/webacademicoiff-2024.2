@@ -48,6 +48,7 @@ class ModalDialog extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log(this.title);
     this.render();
   }
 
