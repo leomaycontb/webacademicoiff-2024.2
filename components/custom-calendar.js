@@ -32,7 +32,12 @@ customCalendarLocalStyles.replaceSync(`
     align-items: center;
     gap: 10px;
     margin-bottom: 3%;
+    justify-content: space-between;
     color: #493159;
+  }
+
+  #calendar-header div:first-child {
+    gap: 10px;
   }
 
   #calendar-header h1 {
@@ -96,9 +101,6 @@ customCalendarLocalStyles.replaceSync(`
   }
 
   #calendar-buttons {
-    position: absolute;
-    bottom: 0%;
-    right: 2%;
   }
 
   #calendar-buttons button {
@@ -109,7 +111,7 @@ customCalendarLocalStyles.replaceSync(`
   }
 
   #calendar-buttons button img {
-    height: 25px;
+    height: 30px;
   }
 
   #events {
@@ -199,7 +201,15 @@ class CustomCalendar extends HTMLElement {
       </div>
 
       <div id="calendar-header">
-        <h1>${month.charAt(0).toUpperCase() + month.slice(1)}</h1><h2>${year}</h2>
+        <div class="centralized"><h1>${month.charAt(0).toUpperCase() + month.slice(1)}</h1><h2>${year}</h2></div>
+        <div id="calendar-buttons" class="centralized">
+          <button id="previous">
+            <img src="assets/calendar-arrow-left.svg" alt="Anterior"/>
+          </button>
+          <button id="next">
+            <img src="assets/calendar-arrow-right.svg" alt="Próximo"/>
+          </button>
+        </div>
       </div>
 
       <div id="weekdays-mark">
@@ -281,22 +291,12 @@ class CustomCalendar extends HTMLElement {
     return checkInit || checkEnd || checkBetween;
   }
 
-  getLastSaturdayOfMonth(year, month) {
-    const lastDay = new Date(year, month + 1, 0);
-    const dayOfWeek = lastDay.getDay();
-    const diff = (dayOfWeek - 6 + 7) % 7;
-    const lastSaturday = new Date(lastDay);
-    lastSaturday.setDate(lastDay.getDate() - diff);
-    return lastSaturday;
-  }
-
   buildCalendarGrid() {
     const days = [];
     const date = new Date(this.currentDate);
     date.setDate(1);
     const firstDay = date.getDay();
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    const lastSaturday = this.getLastSaturdayOfMonth(this.currentDate.getFullYear(), this.currentDate.getMonth()).getDate();
     const events = this.events;
 
     for (let i = 0; i < firstDay; i++) {
@@ -324,14 +324,6 @@ class CustomCalendar extends HTMLElement {
       if (isEvent) classes.push("highlight");
 
       days.push(`<div class="${classes.join(" ")}"><span>${i}</span>
-        ${lastSaturday == i ? `<div id="calendar-buttons" class="centralized">
-          <button id="previous">
-            <img src="assets/calendar-arrow-left.svg" alt="Anterior"/>
-          </button>
-          <button id="next">
-            <img src="assets/calendar-arrow-right.svg" alt="Próximo"/>
-          </button>
-        </div>` : ''}
       </div>`);
     }
 
