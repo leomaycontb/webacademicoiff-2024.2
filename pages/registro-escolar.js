@@ -65,7 +65,7 @@ class RegistroEscolar extends HTMLElement {
           <div class="row">
             <navigator-box color="#F9CF64" title="Consultas" links="Dados dos Alunos:dados-do-aluno.html;Dados dos Professores:dados-dos-professores.html;Dados dos Funcionários:dados-dos-funcionarios.html;Mapa das Salas:mapa-das-salas.html;Conferência de Aulas:conferencia-de-aulas.html;Calendário Acadêmico:calendario-academico.html;Estatísticas:estatisticas.html"></navigator-box>
 
-            <navigator-box color="#F9CF64" title="Relatórios" links="Requerimento:requerimento.html;Boletim Escolar:boletim-escolar.html;Atas de Conselho de Classe / Turma:atas-conselho.html;Diário dos Professores:diario-professores.html;Matrizes Curriculares:matrizes-curriculares.html;Pedido de Matrícula:pedido-matricula.html;Alteração de nota:alteracao-nota.html"></navigator-box>
+            <navigator-box color="#F9CF64" title="Relatórios" links="Requerimento:requerimentos.html;Boletim Escolar:boletim-escolar.html;Atas de Conselho de Classe / Turma:atas-conselho.html;Diário dos Professores:diario-professores.html;Matrizes Curriculares:matrizes-curriculares.html;Pedido de Matrícula:pedido-matricula.html;Alteração de nota:alteracao-nota.html"></navigator-box>
           </div>
           <div class="row">
             <navigator-box color="#B697E8" title="Procedimentos" links="Procedimento 1:#;Procedimento 2:#;Procedimento 3:#;Procedimento 4:#;Procedimento 5:#;Procedimento 6:#;Procedimento 7:#"></navigator-box>

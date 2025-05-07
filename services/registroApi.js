@@ -268,16 +268,70 @@ const mockedChartData = {
   ]
 }
 
+const mockedRequirements = [
+  {
+    "Matrícula": "202311660168",
+    "Nome do Aluno": "Maria Cecilia Vasconcelos de Azeredo",
+    "Curso": "B. Design Gráfico",
+    "Tipo de Requerimento": "Histórico Escolar",
+    "selfUrl": "requerimento.html?id=0"
+  },
+  {
+    "Matrícula": "202160396032",
+    "Nome do Aluno": "Beatriz Padrao Areas",
+    "Curso": "L. Teatro",
+    "Tipo de Requerimento": "Histórico Escolar",
+    "selfUrl": "requerimento.html?id=1"
+  },
+  {
+    "Matrícula": "202210660168",
+    "Nome do Aluno": "Maria Alice Alves Gomes Fonseca",
+    "Curso": "L. Ciências da Natureza",
+    "Tipo de Requerimento": "Histórico Escolar",
+    "selfUrl": "requerimento.html?id=2"
+  },
+  {
+    "Matrícula": "202411660168",
+    "Nome do Aluno": "Rafael Oliveira MArtins",
+    "Curso": "T. I. Edificações",
+    "Tipo de Requerimento": "Atestado de Matrícula",
+    "selfUrl": "requerimento.html?id=3"
+  },
+  {
+    "Matrícula": "202011661168",
+    "Nome do Aluno": "João Pedro Pereira Lima",
+    "Curso": "T. S. Química",
+    "Tipo de Requerimento": "Atestado de Matrícula",
+    "selfUrl": "requerimento.html?id=4"
+  },
+  {
+    "Matrícula": "201920660168",
+    "Nome do Aluno": "Amanda Rocha Fernandes",
+    "Curso": "T. C. Estradas",
+    "Tipo de Requerimento": "Histórico Escolar",
+    "selfUrl": "requerimento.html?id=5"
+  },
+  {
+    "Matrícula": "202012760168",
+    "Nome do Aluno": "Myllena Alves da Silva",
+    "Curso": "B. Engenharia de Comput.",
+    "Tipo de Requerimento": "Atestado de Matrícula",
+    "selfUrl": "requerimento.html?id=6"
+  }
+];
+
 class RegistroApi {
   static _instance;
 
   #users;
   #token;
   loggedUser;
+  #requirements;
 
   constructor() {
     this.#users = this.#loadUsers();
     this.#token = this.#loadToken();
+    this.#requirements = this.#loadRequirements();
     this.loggedUser = this.#loadLoggedUser();
   }
 
@@ -289,6 +343,15 @@ class RegistroApi {
 
   #loadToken() {
     return localStorage.getItem("token");
+  }
+
+  #loadRequirements() {
+    const savedRequirements = localStorage.getItem("requirements");
+    if(savedRequirements) {
+      return JSON.parse(atob(savedRequirements));
+    }
+    localStorage.setItem("requirements", btoa(JSON.stringify(mockedRequirements)));
+    return [...mockedRequirements.map(mr => ({...mr}))];
   }
 
   #loadUsers() {
@@ -357,5 +420,28 @@ class RegistroApi {
       return {success: false, message: 'Você precisa estar autenticado'};
     }
     return {success: true, data: mockedChartData};
+  }
+
+  get requirementsDataForTable() {
+    if(!this.loggedUser) {
+      return {success: false, message: 'Você precisa estar autenticado'};
+    }
+    return {success: true, data: {
+      rows: this.#requirements.map(mr => ({...mr})),
+      firstSelectValuesAndFiltersFn: [{value: "Todos os Cursos", fn: (row, value) => true}, ...this.#requirements.reduce(([data, loaded], re) => {
+        if(loaded.includes(re["Curso"])) return [data, loaded];
+        return [[...data, {
+          value: re["Curso"],
+          fn: (row, value) => row["Curso"] == value
+        }], [...loaded, re["Curso"]]];
+      }, [[], []])[0]], 
+      secondSelectValuesAndFiltersFn: [{value: "Todos os Requerimentos", fn: (row, value) => true}, ...this.#requirements.reduce(([data, loaded], re) => {
+        if(loaded.includes(re["Tipo de Requerimento"])) return [data, loaded];
+        return [[...data, {
+          value: re["Tipo de Requerimento"],
+          fn: (row, value) => row["Tipo de Requerimento"] == value
+        }], [...loaded, re["Tipo de Requerimento"]]];
+      }, [[], []])[0]], 
+    }};
   }
 }
